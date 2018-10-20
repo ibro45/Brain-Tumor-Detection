@@ -2,6 +2,7 @@ import numpy as np
 import cv2
 from natsort import natsorted
 from collections import defaultdict
+from scipy.ndimage import rotate
 from typing import List
 
 
@@ -64,3 +65,22 @@ def sort_paths(paths: List[str]) -> List[str]:
         ct_sorted += snd[scan_id]
 
     return ct_sorted
+
+
+def rotate_scan(scan, angle, axes, keep_dim=True):
+    s_rot = rotate(scan, angle, axes=axes)
+    if keep_dim:
+        shape = np.array(scan.shape)
+        diff = np.array(s_rot.shape)-shape
+        diff = diff//2
+        end = shape+diff
+        s_rot = s_rot[diff[0]:end[0], diff[1]:end[1], diff[2]:end[2]]
+    return s_rot
+
+
+def rotate_side_lr(scan, angle, keep_dim=True):
+    return rotate_scan(scan, angle, (1,2))
+
+    
+def rotate_horisontally(scan, angle, keep_dim=True):
+    return rotate_scan(scan, angle, (0,1))
