@@ -1,6 +1,7 @@
 import numpy as np 
 import cv2
 from natsort import natsorted
+from collections import defaultdict
 from typing import List
 
 
@@ -36,25 +37,30 @@ def clean_slice(img, erode_iter = 3, dilate_iter = 1):
 
 
 def sort_paths(paths: List[str]) -> List[str]:  
-    """
-    Augmented natural sorting to group together brain 
-    slices upto TWO per patient
-    """
+    """Augmented natural sorting to group together brain slices"""
     ct_paths_sorted = natsorted(paths)
     curr_patient_id = ct_paths_sorted[0].split('/')[-2]
     fst = []
-    snd = []
+    snd = defaultdict(list)
     ct_sorted = []
     for i in range(len(ct_paths_sorted)-1):
+        patient_id = ct_paths_sorted[i].split('/')[-2]
+        if patient_id!=curr_patient_id:
+            ct_sorted += fst 
+            for scan_id in sorted(snd.keys()):
+                ct_sorted += snd[scan_id]
+            fst = []
+            snd = defaultdict(list)
+            curr_patient_id = patient_id
+            
         if '_' in ct_paths_sorted[i].split('/')[-1]:
-            snd.append(ct_paths_sorted[i])
+            scan_id = ct_paths_sorted[i].split('/')[-1].split('_')[-1]
+            snd[scan_id].append(ct_paths_sorted[i])
         else:
             fst.append(ct_paths_sorted[i])
 
-        patient_id = ct_paths_sorted[i].split('/')[-2]
-        if patient_id!=curr_patient_id:
-            ct_sorted += fst + snd
-            fst = []
-            snd = []
-            curr_patient_id = patient_id
+    ct_sorted += fst
+    for scan_id in sorted(snd.keys()):
+        ct_sorted += snd[scan_id]
+
     return ct_sorted
