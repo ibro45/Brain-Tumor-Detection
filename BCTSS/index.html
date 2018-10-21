@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Brain CT Screening System</title>
+	<link rel="stylesheet" href="styling.css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
+	<script src="script.js"></script>
+</head>
+<body>
+	<div id="appHeader">
+		<h1 id="appHeading">Brain CT Screening System</h1>
+	</div>
+	<div id="mainContent">
+		<div id="inputContainer">
+			<label class="fileContainer">
+				Upload
+				<input type="file" id="uploadButton" onchange="listFiles()" multiple>
+			</label>
+			<h3 id="inputText">Input data</h3>
+			<ul id="fileList">
+			</ul>
+		</div>
+		<div id="buttonContainer">
+			<button id="detectButton">Detect</button>
+		</div>
+		<div id="outputContainer">
+			<h3>Output data</h3>
+			<button id="clearButton" onclick="clearInput()">Clear</button>
+		</div>
+	</div>
+</body>
+</html>
