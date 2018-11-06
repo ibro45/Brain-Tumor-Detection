@@ -1,24 +1,24 @@
 # Brain Tumor Detection
 
 ## Description
-Our project aims to give a software solution to a problem of accidental neoplasm findings in CT scans – especially emergency medicine. Using the said software, CT scan slices would be autonomously processed and analysed in order to screen the data and mark the slices with suspicious abnormalities. Those slices would then be reviewed by a radiologist  who would give the final verdict on the possible malignancy of the abnormality.
+Our project aims to give a software solution to the problem of accidental neoplasm findings in CT scans – especially emergency medicine. Using said software, CT scan slices would be autonomously processed and analysed to screen the data and mark the slices with suspicious abnormalities. Those slices would then be reviewed by a radiologist, who would give the final verdict on the possible malignancy of the abnormality.
 
-In practice successful large scale screening method could greatly increase the cancer survival rate as its prognosis is greatly dependent of the stage said cancer is in at the time of the diagnosis.
+In practice, a successful, large scale screening method could significantly increase the cancer survival rate as its prognosis is greatly dependent on the stage said cancer is in at the time of the diagnosis.
 
-This project is done at the JunctionX Budapest 48-hour hackathon and is our approach to the challenge given by Varian, which can be found [here](https://budapest.hackjunction.com/challenges/varian).
+This project was done at the JunctionX Budapest 48-hour hackathon and is our approach to the challenge given by Varian, which can be found [here](https://budapest.hackjunction.com/challenges/varian).
 
 In the given challenge we are focusing solely on brain cancer CT scans, but similar technology could be applied to any CT/MRI scan. 
 
-A raw, unlabelled, dataset of CT and MR DICOM images for 30 patients was provided. After examining the challenge, we decided to go with two approaches to the problem:
+A raw, unlabeled, dataset of CT and MR DICOM images for 30 patients was provided. After examining the challenge, we decided for two different approaches to the problem:
 
 1. Deep Learning Approach
 2. Brain Symmetry Approach
 
 ## Deep Learning Approach
 
-For supervised learning, labelled data is a requirement. Since the provided data wasn't labelled, we came up with a method to properly label it. For each series of scans, there is a file that indicates and contours the tumor(s) on each abnormal slice. We, therefore, decided to use that information to label each of the slices as either containing tumor or not containing tumor depending on if a tumor is present there.
+For supervised learning, labelled data is a requirement. Since the provided data wasn't labelled, we came up with a method to properly label it. For each series of scans, there is a file that indicates and contours the tumor(s) on each abnormal slice. We, therefore, decided to use that information to label each of the slices as either containing tumor or not containing tumor, depending on the tumor's presence.
 
-The next step was to decide on the model architecture. As we didn't have time to dive  too deep into this problem, we decided to go with VGG16 pretrained on Imagenet. Unfortunately, as expected, the model overfits on our dataset due to it's small quantity and uneven distribution (there being more slices not containing any tumors than those that do). The second issue can be easily avoided by solving the first one (using a larger dataset), which is something we are looking to deal with in the near future.
+The next step was to decide which model architecture we should use. Due to strict time limitation, we couldn't dive too deep into the problem and decided to go with pretrained VGG16 on Imagenet. Unfortunately, as expected, the model overfits on our dataset due to its small quantity and uneven distribution (there being more slices not containing any tumors than those that do). The second issue can be easily eliminated by solving the first one (using a larger dataset), which is something we are looking to deal with in the near future.
 
 
 ## Brain Symmetry Approach
